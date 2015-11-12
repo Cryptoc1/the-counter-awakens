@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>The Counter Awakens</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#455A64">
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #282828;
+            font-family: Montserrat, 'Open Sans', Helvetica-Neue, Roboto, Arial, sans-serif, serif;
+            font-size: 1em;
+            font-weight: 400;
+            /*            color: rgba(28, 28, 28, .98);*/
+            -webkit-font-smoothing: antialiased;
+            /*            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);*/
+            text-shadow: 1px 1px 1px rgba(245, 245, 245, 0.004);
+            outline: none;
+            border: none;
+            overflow: hidden;
+        }
+        
+        .background {
+            width: 105%;
+            height: 105%;
+            position: absolute;
+            top: -1.5%;
+            left: -2.5%;
+            background-image: url(static/wallpaper-edited.gif);
+            background-repeat: no-repeat;
+            background-position: 20%;
+            background-size: auto 100%;
+            filter: blur(4.5px);
+            -webkit-filter: blur(5px);
+            outline: none;
+            border: none;
+            z-index: 1;
+        }
+        
+        #counter {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            font-size: 350pt;
+            text-align: center;
+        }
+        
+        .time:before {
+            display: none;
+        }
+        
+        .time {
+            color: #FAFAFA;
+            font-size: 69pt;
+            z-index: 2;
+            display: inline-block;
+            text-align: center;
+            font-weight: 700;
+            padding: 0;
+        }
+        
+        .time:after {
+            font-size: 18pt;
+            display: block;
+            font-weight: 400;
+        }
+        
+        #days:after {
+            content: 'DAYS';
+        }
+        
+        #hours:after {
+            content: 'HOURS';
+        }
+        
+        #minutes:after {
+            content: 'MINUTES ';
+        }
+        
+        #seconds:after {
+            content: 'SECONDS';
+        }
+        
+        @media screen and (max-width: 750px) and (orientation: portrait) {
+            .background {
+                background-position: 45%;
+            }
+            #counter {
+                margin-top: 25%;
+                text-align: center;
+                font-size: 100pt;
+            }
+            .time {
+                font-size: 40pt;
+            }
+            .time:after {
+                font-size: 16pt;
+            }
+        }
+        
+        @media screen and (max-width: 750px) and (orientation: landscape) {
+            .background {
+                background-position: 45%;
+            }
+            #counter {
+                margin-top: 15%;
+                text-align: center;
+                font-size: 100pt;
+            }
+            .time {
+                font-size: 40pt;
+                display: inline-block;
+                margin: 0;
+            }
+            .time:after {
+                font-size: 16pt;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    <div id="counter">
+        <div class="time" id="days"></div>
+        <div class="time" id="hours"></div>
+        <div class="time" id="minutes"></div>
+        <div class="time" id="seconds"></div>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        var countTo = new Date('December 18, 2015 00:00:00');
+        (function count(date) {
+            //            console.log(date);
+            document.getElementById('days').textContent = date.days;
+            document.getElementById('hours').textContent = date.hours;
+            document.getElementById('minutes').textContent = date.minutes;
+            document.getElementById('seconds').textContent = date.seconds;
+            setTimeout(function () {
+                count(millisecondsToStr(countTo.getTime() - Date.now()))
+            }, 1000);
+        })(millisecondsToStr(countTo.getTime() - Date.now()));
+    }
+
+    function millisecondsToStr(milliseconds) {
+
+        function numberEnding(number) {
+            return (number > 1) ? 'S' : '';
+        }
+
+        var temp = Math.floor(milliseconds / 1000);
+        ret = {};
+        var days = Math.floor((temp %= 31536000) / 86400);
+        ret.days = days
+        var hours = Math.floor((temp %= 86400) / 3600);
+        ret.hours = hours
+        var minutes = Math.floor((temp %= 3600) / 60);
+        ret.minutes = minutes
+        var seconds = temp % 60;
+        ret.seconds = seconds
+        return ret;
+    }
+</script>
+
+</html>
