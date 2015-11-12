@@ -1,3 +1,3 @@
 # the-counter-awakens
 
-A countdown to opening down of *The Force Awakens*
+A countdown to opening day of *The Force Awakens*
